@@ -135,6 +135,14 @@ contract NFTMintDN404 is DN404, ERC20Permit, Ownable{
         return _baseURI;
     }
 
-    
+    function setAllowlist(bytes32 allowlistRoot_) public onlyOwner {
+        allowlistRoot = allowlistRoot_;
+    }
+
+    function setAllowlistPrice(uint120 allowlistPrice_) public onlyOwner {
+        allowlistPrice = allowlistPrice_;
+    }
+
+
 
 }
