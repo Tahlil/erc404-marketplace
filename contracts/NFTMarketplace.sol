@@ -14,3 +14,29 @@ error NotApprovedForMarketplace();
 error PriceMustBeAboveZero();
 error NotApproved();
 
+contract NFTMarketplace is Context {
+    uint256 private counter;
+
+    struct Listing {
+        uint256 price;
+        address seller;
+    }
+
+    event LogItemListed(
+        address indexed seller,
+        address indexed nftAddress,
+        uint256 price
+    );
+    event LogItemCanceled(
+        address indexed seller,
+        address indexed nftAddress
+    );
+    event LogItemBought(
+        address indexed buyer,
+        address indexed nftAddress,
+        uint256 price,
+        uint256 fraction
+    );
+    mapping(address => Listing) private s_listings;
+    mapping(address => uint256) private s_proceeds;
+}
