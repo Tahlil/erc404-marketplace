@@ -101,5 +101,9 @@ contract NFTMintDN404 is DN404, ERC20Permit, Ownable{
         live = !live;
     }
 
+    function withdraw() public onlyOwner {
+        SafeTransferLib.safeTransferAllETH(msg.sender);
+    }
+
 
 }
