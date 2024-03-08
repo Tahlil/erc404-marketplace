@@ -63,4 +63,31 @@ contract NFTMintDN404 is DN404, ERC20Permit, Ownable{
         _initializeDN404(initialTokenSupply, initialSupplyOwner, mirror);
     }
 
+    function mint(uint256 amount) public payable isValidMint(publicPrice, amount) {
+        unchecked {
+            ++numMinted;
+        }
+        _mint(msg.sender, amount);
+    }  
+
+    function allowlistMint(uint256 amount, bytes32[] calldata proof)
+        public
+        payable
+        isValidMint(allowlistPrice, amount)
+    {
+        if (
+            !MerkleProofLib.verifyCalldata(
+                proof, allowlistRoot, keccak256(abi.encodePacked(msg.sender))
+            )
+        ) {
+            revert InvalidProof();
+        }
+        unchecked {
+            ++numMinted;
+        }
+        _mint(msg.sender, amount);
+    }
+    
+      
+
 }
