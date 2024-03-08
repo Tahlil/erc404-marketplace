@@ -105,5 +105,36 @@ contract NFTMintDN404 is DN404, ERC20Permit, Ownable{
         SafeTransferLib.safeTransferAllETH(msg.sender);
     }
 
+    function name() public view override returns (string memory) {
+        return _name;
+    }
+
+    function symbol() public view override returns (string memory) {
+        return _symbol;
+    }
+
+    function tokenURI(uint256 tokenId) public view override returns (string memory result) {
+        if (bytes(_baseURI).length != 0) {
+            result = string(abi.encodePacked(_baseURI, LibString.toString(tokenId)));
+        }
+    }
+
+    function nftTotalSupply() public view returns (uint256) {
+        return _totalNFTSupply();
+    }
+
+    function nftbalanceOf(address owner) public view returns (uint256) {
+        return _balanceOfNFT(owner);
+    }
+
+    function previewNextTokenId() public view returns (uint256) {
+        return _nextTokenId();
+    }
+
+    function getURI() public view returns(string memory) {
+        return _baseURI;
+    }
+
+    
 
 }
