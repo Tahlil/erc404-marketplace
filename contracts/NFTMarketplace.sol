@@ -39,4 +39,23 @@ contract NFTMarketplace is Context {
     );
     mapping(address => Listing) private s_listings;
     mapping(address => uint256) private s_proceeds;
+
+    modifier isListed(address nftAddress) {
+        Listing memory listing = s_listings[nftAddress];
+        require(listing.price > 0, "Not listed");
+        _;
+    }
+
+    modifier notListed(address nftAddress) {
+        Listing memory listing = s_listings[nftAddress];
+        require(listing.price == 0, "Already listed");
+        _;
+    }
+
+    modifier isOwner(address nftAddress, address spender) {
+        IDN404 nft = IDN404(nftAddress);
+        require(nft.balanceOf(spender) > 0, "Not owner");
+        _;
+    }    
+
 }
